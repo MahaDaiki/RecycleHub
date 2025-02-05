@@ -1,0 +1,62 @@
+<section class="py-16 bg-grey">
+  <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-5 items-center">
+
+      <!-- Image Section -->
+      <div class="lg:col-span-2 flex items-center h-full">
+        <img src="login.jpg" alt="Login Image" class="w-full h-full object-cover rounded-lg">
+      </div>
+
+      <!-- Form Section -->
+      <div class="lg:col-span-3">
+
+        <div class="rounded-lg bg-stone-200 pt-20 pb-20 shadow-lg bg-opacity-0  h-full ">
+          <h1 class="text-center text-3xl font-bold mb-6">LOGIN</h1>
+          <div class="flex  items-center justify-center">
+            <!-- Login Form -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4 w-full max-w-sm px-0 py-8">
+
+              <!-- Email Input -->
+              <div class="flex flex-col items-center">
+                <input
+                  formControlName="email"
+                  class="w-full rounded-lg border-gray-200 p-3 text-sm mb-4"
+                  placeholder="Email"
+                  type="email"
+                />
+                <small *ngIf="isInvalid('email')" class="text-red-500">
+                  Valid email required.
+                </small>
+              </div>
+
+              <!-- Password Input -->
+              <div class="flex flex-col items-center">
+                <input
+                  formControlName="password"
+                  class="w-full rounded-lg border-gray-200 p-3 text-sm mb-4"
+                  placeholder="Password"
+                  type="password"
+                />
+                <small *ngIf="isInvalid('password')" class="text-red-500">
+                  Password is required.
+                </small>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="mt-4">
+                <button
+                  type="submit"
+                  class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
+                  [disabled]="loginForm.invalid"
+                >
+                  Login
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
