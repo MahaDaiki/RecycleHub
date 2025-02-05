@@ -1,0 +1,144 @@
+<section class="py-16 bg-grey">
+  <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-5 items-center">
+
+
+      <div class="lg:col-span-2 flex items-center h-full">
+        <img src="register.jpeg" alt="Placeholder" class="w-full h-full object-cover rounded-lg">
+      </div>
+
+
+      <div class="lg:col-span-3">
+
+        <div class="rounded-lg bg-white p-8 shadow-lg ">
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4" >
+        <div class="flex flex-col items-center mb-6">
+          <label for="profilePicture" class="block cursor-pointer">
+            <img
+              [src]="profilePreview || 'pfp.png'"
+              alt="Profile Preview"
+              class="w-32 h-32 rounded-full border-2 border-gray-300 object-cover"
+            />
+          </label>
+          <input
+            type="file"
+            id="profilePicture"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            class="hidden"
+          />
+          <p class="text-sm text-gray-600 mt-2">Upload Profile Picture</p>
+        </div>
+
+        <!-- Form -->
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <input
+                formControlName="fullName"
+                class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                placeholder="Full Name"
+                type="text"
+              />
+              <small *ngIf="isInvalid('fullName')" class="text-red-500">
+                Name is required.
+              </small>
+            </div>
+
+
+            <div>
+              <input
+                formControlName="email"
+                class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                placeholder="Email"
+                type="email"
+              />
+              <small *ngIf="isInvalid('email')" class="text-red-500">
+                Valid email required.
+              </small>
+            </div>
+        </div>
+            <!-- Mot de passe & Confirmation -->
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <input
+                  formControlName="password"
+                  class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  placeholder="Password"
+                  type="password"
+                />
+                <small *ngIf="isInvalid('password')" class="text-red-500">
+                  Password must be at least 6 characters.
+                </small>
+              </div>
+
+              <div>
+                <input
+                  formControlName="confirmPassword"
+                  class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  placeholder="Confirm Password"
+                  type="password"
+                />
+                <small *ngIf="isInvalid('confirmPassword')" class="text-red-500">
+                  Passwords must match.
+                </small>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <input
+                  formControlName="phoneNumber"
+                  class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  placeholder="Phone Number"
+                  type="tel"
+                />
+                <small *ngIf="isInvalid('phoneNumber')" class="text-red-500">
+                  Phone number must be 10 digits.
+                </small>
+              </div>
+
+              <div>
+                <input
+                  formControlName="dateOfBirth"
+                  class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  type="date"
+                />
+                <small *ngIf="isInvalid('dateOfBirth')" class="text-red-500">
+                  Date of birth required.
+                </small>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div>
+              <input
+                formControlName="address"
+                class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                placeholder="Address"
+                type="text"
+              />
+              <small *ngIf="isInvalid('address')" class="text-red-500">
+                Address is required.
+              </small>
+            </div>
+
+            <!-- Hidden role input -->
+            <input type="hidden" formControlName="role" />
+
+            <!-- Submit Button -->
+            <div class="mt-4">
+              <button
+                type="submit"
+                class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
+                [disabled]="registerForm.invalid"
+              >
+                Register
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
