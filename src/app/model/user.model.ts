@@ -1,5 +1,6 @@
 export class UserModel {
-
+  private static nextId = 1;
+  public id: number;
   constructor(
     public email: string,
     public password: string,
@@ -10,5 +11,7 @@ export class UserModel {
     public role: string,
     public profilePicture?: string
 
-  ) {}
+  ) {
+    this.id = UserModel.nextId++;
+  }
 }
