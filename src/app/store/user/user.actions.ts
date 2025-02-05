@@ -11,12 +11,9 @@ export const loadUsers = createAction(
   props<{ users: any[] }>()
 );
 
-// export const registerUserSuccess = createAction(
-//   '[User] Register Success',
-//   props<{ user: UserModel }>()
-// );
-//
-// export const registerUserFailure = createAction(
-//   '[User] Register Failure',
-//   props<{ error: string }>()
-// );
+export const loginUser = createAction(
+    '[User] Login',
+    props<{ email: string; password: string }>()
+);
+
+export const logoutUser = createAction('[User] Logout');

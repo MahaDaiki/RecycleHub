@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {UserModel} from '../model/user.model';
 import * as bcrypt from 'bcryptjs';
 import {Store} from '@ngrx/store';
-import { registerUser } from '../store/user/user.actions';
+import {loginUser, logoutUser, registerUser} from '../store/user/user.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +16,14 @@ export class UserService {
     this.store.dispatch(registerUser({ user }));
 
     return true;
+  }
+
+  login(email: string, password: string): boolean {
+    this.store.dispatch(loginUser({ email, password }));
+    return true;
+  }
+
+  logout(): void {
+    this.store.dispatch(logoutUser());
   }
 }
