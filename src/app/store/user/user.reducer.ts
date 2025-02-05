@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { registerUser, loadUsers } from './user.actions';
+import {registerUser, loadUsers, logoutUser, loginUser} from './user.actions';
 import bcrypt from 'bcryptjs';
 import {UserModel} from '../../model/user.model';
 
@@ -10,6 +10,7 @@ const initialUsers: UserModel[] = JSON.parse(localStorage.getItem('users') || '[
 if (initialUsers.length === 0) {
   initialUsers.push(
     {
+      id:1,
       fullName: 'collector1',
       email: 'collector1@email.com',
       password: bcrypt.hashSync('password123', 10),
@@ -20,6 +21,7 @@ if (initialUsers.length === 0) {
       profilePicture: '',
     },
     {
+      id:2,
       fullName: 'collector2',
       email: 'collector2@email.com',
       password: bcrypt.hashSync('password123', 10),
@@ -64,5 +66,30 @@ export const userReducer = createReducer(
       ...state,
       users,
     };
-  })
+  }),
+
+on(loginUser, (state, { email, password }) => {
+    const user = state.users.find(u => u.email === email);
+
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+        alert('Invalid credentials');
+        return state;
+    }
+
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+    return {
+        ...state,
+        loggedInUser: user,
+    };
+}),
+
+
+    on(logoutUser, (state) => {
+        localStorage.removeItem('loggedInUser');
+        return {
+            ...state,
+            loggedInUser: null,
+        };
+    })
 );

@@ -10,9 +10,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {userReducer} from './store/user/user.reducer';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
   ],
   imports: [
     BrowserModule,
