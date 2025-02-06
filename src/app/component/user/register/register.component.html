@@ -4,13 +4,13 @@
 
 
       <div class="lg:col-span-2 flex items-center h-full">
-        <img src="register.jpeg" alt="Placeholder" class="w-full h-full object-cover rounded-lg">
+        <img src="bg1.png" alt="Placeholder" class="w-full h-full object-cover rounded-lg">
       </div>
 
 
-      <div class="lg:col-span-3">
+      <div class="lg:col-span-3 ">
 
-        <div class="rounded-lg bg-white p-8 shadow-lg ">
+        <div class="rounded-lg bgform p-8 shadow-lg ">
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4" >
         <div class="flex flex-col items-center mb-6">
           <label for="profilePicture" class="block cursor-pointer">
@@ -36,7 +36,7 @@
             <div>
               <input
                 formControlName="fullName"
-                class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                class="w-full rounded-lg border-gray-200 border-solid p-3 text-sm"
                 placeholder="Full Name"
                 type="text"
               />

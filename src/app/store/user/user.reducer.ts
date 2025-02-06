@@ -1,10 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
-import {registerUser, loadUsers, logoutUser, loginUser} from './user.actions';
+import {registerUser, loadUsers, logoutUser, loginUser, updateUserProfile, deleteUser} from './user.actions';
 import bcrypt from 'bcryptjs';
 import {UserModel} from '../../model/user.model';
 
 export interface UserState {
-  users: UserModel[];
+    users: UserModel[];
+    loggedInUser: UserModel | null;
+
 }
 const initialUsers: UserModel[] = JSON.parse(localStorage.getItem('users') || '[]');
 if (initialUsers.length === 0) {
@@ -18,7 +20,7 @@ if (initialUsers.length === 0) {
       address: 'Safi',
       dateOfBirth: '1998-01-01',
       role: 'collector',
-      profilePicture: '',
+      profilePicture: 'pfp.png',
     },
     {
       id:2,
@@ -29,13 +31,15 @@ if (initialUsers.length === 0) {
       address: 'Eljadida',
       dateOfBirth: '1999-05-15',
       role: 'collector',
-      profilePicture: '',
+      profilePicture: 'pfp.png',
     },
   );
 }
 
 export const initialState: UserState = {
-  users: initialUsers,
+    users: initialUsers,
+    loggedInUser: null,
+
 };
 
 
@@ -68,6 +72,8 @@ export const userReducer = createReducer(
     };
   }),
 
+
+
 on(loginUser, (state, { email, password }) => {
     const user = state.users.find(u => u.email === email);
 
@@ -85,11 +91,43 @@ on(loginUser, (state, { email, password }) => {
 }),
 
 
+
+
     on(logoutUser, (state) => {
         localStorage.removeItem('loggedInUser');
         return {
             ...state,
             loggedInUser: null,
         };
-    })
+    }),
+
+on(updateUserProfile, (state, { updatedUser }) => {
+    const updatedUsers = state.users.map(user =>
+        user.id === updatedUser.id ? updatedUser : user
+    );
+
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+
+    localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
+
+    return {
+        ...state,
+        users: updatedUsers,
+        loggedInUser: updatedUser,
+    };
+}),
+  on(deleteUser, (state, { userId }) => {
+  const updatedUsers = state.users.filter(user => user.id !== userId);
+  localStorage.setItem('users', JSON.stringify(updatedUsers));
+
+  return {
+    ...state,
+    users: updatedUsers,
+  };
+})
+
 );
+
+
+
+

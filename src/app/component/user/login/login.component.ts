@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../service/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import {UserService} from '../../../service/user.service';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private floginb: FormBuilder, private userService: UserService) {
+  constructor(private floginb: FormBuilder, private userService: UserService,private router: Router) {
     this.loginForm = this.floginb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -25,6 +26,7 @@ export class LoginComponent {
     }
     const { email, password } = this.loginForm.value;
     this.userService.login(email, password);
+    this.router.navigate(['/profile']);
   }
 
   isInvalid(controlName: string): boolean {
