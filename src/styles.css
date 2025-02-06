@@ -1,11 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
-body{
+/*body{*/
+/*  height: 100vh;*/
+/*  background: rgb(255, 255, 255);*/
+/*  background: linear-gradient(0deg, rgba(117, 84, 13, 0.25) 20%, rgba(0, 201, 255, 0.29) 68%);*/
+/*}*/
+
+/*html, body { height: 100%; }*/
+
+body {
+  position: relative;
+  width: 100%;
   height: 100vh;
-  background: rgb(255, 255, 255);
-  background: linear-gradient(0deg, rgba(117, 84, 13, 0.25) 20%, rgba(0, 201, 255, 0.29) 68%);
+  background: url('../public/bg2.jpg') center/cover no-repeat;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: blur(1px);
+  z-index: -1;
+}
+
+.bgform{
+  background: linear-gradient(0deg, rgba(117, 84, 13, 0.25) 20%, rgba(0, 201, 255, 0.29) 68%);
+  backdrop-filter: blur(5px);
+  opacity: 0.8;
+}
+input {
+  border: 2px solid white;
+  padding: 10px;
+  border-radius: 5px;
+  background: transparent;
+  color: white;
+}
+
+input::placeholder {
+  color: rgb(0, 0, 0);
+}

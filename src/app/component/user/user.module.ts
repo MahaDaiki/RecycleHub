@@ -5,13 +5,17 @@ import { UserRoutingModule } from './user-routing.module';
 import {UserService} from '../../service/user.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from './login/login.component';
+import {ModifyProfileComponent} from "./modify-profile/modify-profile.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 
 
 @NgModule({
   declarations: [
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent,
+    ModifyProfileComponent,
   ],
   imports: [
     CommonModule,

@@ -1,1 +1,97 @@
-<p>modify-profile works!</p>
+<form [formGroup]="modifyProfileForm!" (ngSubmit)="onSubmit()">
+  <div class="flex justify-center items-center min-h-screen ">
+    <div class="w-full max-w-4xl bg-transparent p-8 bgform rounded-lg shadow-lg">
+      <h2 class="text-2xl font-semibold mb-6 text-center">📝Edit Profile</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+
+        <div class="space-y-4">
+          <h3 class="text-lg font-medium">User Details</h3>
+
+          <div>
+            <label class="block">✉️ Email:</label>
+            <input type="email" formControlName="email" required class="w-full p-2 border rounded" />
+            <span *ngIf="modifyProfileForm!.get('email')?.invalid && modifyProfileForm!.get('email')?.touched" class="text-red-500 text-xs">
+              Invalid email address
+            </span>
+          </div>
+
+          <div>
+            <label class="block">👤 Full Name:</label>
+            <input type="text" formControlName="fullName" required class="w-full p-2 border rounded" />
+            <span *ngIf="modifyProfileForm!.get('fullName')?.invalid && modifyProfileForm!.get('fullName')?.touched" class="text-red-500 text-xs">
+              Full name is required
+            </span>
+          </div>
+
+          <div>
+            <label class="block">📞 Phone Number:</label>
+            <input type="tel" formControlName="phoneNumber" required class="w-full p-2 border rounded" />
+            <span *ngIf="modifyProfileForm!.get('phoneNumber')?.invalid && modifyProfileForm!.get('phoneNumber')?.touched" class="text-red-500 text-xs">
+              Invalid phone number (must be 10 digits)
+            </span>
+          </div>
+
+          <div>
+            <label class="block">📍Address:</label>
+            <input type="text" formControlName="address" required class="w-full p-2 border rounded" />
+          </div>
+
+          <div>
+            <label class="block">📅 Date of Birth:</label>
+            <input type="date" formControlName="dateOfBirth" required class="w-full p-2 border rounded" />
+          </div>
+
+          <input type="text" formControlName="role" hidden />
+        </div>
+
+        <!-- Right Column: Password Section -->
+        <div class="space-y-4">
+          <h3 class="text-lg font-medium">Change Password</h3>
+
+          <div>
+            <label class="block">🔐 Old Password:</label>
+            <input
+              type="password"
+              formControlName="oldPassword"
+              (input)="onOldPasswordInput()"
+              required class="w-full p-2 border rounded"
+            />
+            <span *ngIf="modifyProfileForm!.get('oldPassword')?.invalid && modifyProfileForm!.get('oldPassword')?.touched" class="text-red-500 text-xs">
+              Old password is required
+            </span>
+          </div>
+
+          <div *ngIf="showNewPassword">
+            <label class="block">🔒 New Password:</label>
+            <input
+              type="password"
+              formControlName="newPassword"
+              (input)="onNewPasswordInput()"
+              class="w-full p-2 border rounded"
+            />
+            <span *ngIf="modifyProfileForm!.get('newPassword')?.invalid && modifyProfileForm!.get('newPassword')?.touched" class="text-red-500 text-xs">
+              Password must be at least 6 characters
+            </span>
+          </div>
+
+          <div *ngIf="showConfirmPassword">
+            <label class="block">🔒 Confirm New Password:</label>
+            <input type="password" formControlName="confirmNewPassword" class="w-full p-2 border rounded" />
+            <span *ngIf="modifyProfileForm!.get('confirmNewPassword')?.invalid && modifyProfileForm!.get('confirmNewPassword')?.touched" class="text-red-500 text-xs">
+              Please confirm the new password
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-center mt-6">
+        <button type="submit"
+                class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

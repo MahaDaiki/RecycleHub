@@ -52,7 +52,27 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const user: UserModel = this.registerForm.value;
+      const formData = this.registerForm.value;
+
+      // Check existing users in localStorage
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+      let lastUserId = localStorage.getItem('lastUserId');
+      let newId = lastUserId ? Number(lastUserId) + 1 : 1;
+
+      localStorage.setItem('lastUserId', String(newId));
+
+      const user: UserModel = new UserModel(
+        newId,
+        formData.email,
+        formData.password,
+        formData.fullName,
+        formData.phoneNumber,
+        formData.address,
+        formData.dateOfBirth,
+        formData.role,
+        formData.profilePicture
+      );
       if (this.userService.registerUser(user)) {
         alert('User registered successfully');
         this.registerForm.reset();
