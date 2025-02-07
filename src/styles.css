@@ -14,6 +14,7 @@ body {
   width: 100%;
   height: 100vh;
   background: url('../public/bg2.jpg') center/cover no-repeat;
+  background-color: #a6e2ef;
 }
 
 body::before {
@@ -43,4 +44,9 @@ input {
 
 input::placeholder {
   color: rgb(0, 0, 0);
+}
+
+.banner{
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.75) 20%, rgba(0, 201, 255, 0.29) 80%);
+
 }
