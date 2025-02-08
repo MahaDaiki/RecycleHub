@@ -14,6 +14,7 @@ import { collectReducer } from './store/collect/collect.reducer';
   declarations: [
     AppComponent,
 
+
   ],
   imports: [
     BrowserModule,

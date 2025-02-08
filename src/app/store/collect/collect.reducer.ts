@@ -54,7 +54,7 @@ export const collectReducer = createReducer(
     return {
       ...state,
       collects: [...state.collects, newCollect],
-      error: null, // Réinitialiser l'erreur si tout est OK
+      error: null,
     };
   })
 );

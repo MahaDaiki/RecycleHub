@@ -7,11 +7,13 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CollectService} from '../../service/collect.service';
 import {collectReducer} from '../../store/collect/collect.reducer';
 import {StoreModule} from '@ngrx/store';
+import {CollectListComponent} from './collect-list/collect-list.component';
 
 
 @NgModule({
   declarations: [
     CollectionAddComponent,
+    CollectListComponent,
   ],
   imports: [
     CommonModule,
@@ -20,6 +22,6 @@ import {StoreModule} from '@ngrx/store';
     StoreModule.forFeature('collect', collectReducer)
   ],
   providers: [CollectService],
-  exports: [CollectionAddComponent]
+  exports: [CollectionAddComponent,CollectListComponent ]
 })
 export class CollectModule { }
