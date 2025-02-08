@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from './login/login.component';
 import {ModifyProfileComponent} from "./modify-profile/modify-profile.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {CollectModule} from '../collect/collect.module';
 
 
 
@@ -20,7 +21,8 @@ import {ProfileComponent} from "./profile/profile.component";
   imports: [
     CommonModule,
     UserRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CollectModule,
   ],
   providers: [UserService]
 })

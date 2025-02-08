@@ -1,0 +1,47 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold text-center mb-6">My Collection Requests</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div
+      *ngFor="let collect of collects"
+      class="bg-white rounded-xl shadow-lg p-4 border border-gray-200"
+    >
+      <h3 class="text-lg font-semibold text-gray-800">Collect #{{ collect.id }}</h3>
+      <p class="text-gray-600"><strong>Address:</strong> {{ collect.address }}</p>
+      <p class="text-gray-600"><strong>Date:</strong> {{ collect.collectionDate }}</p>
+      <p class="text-gray-600"><strong>Time:</strong> {{ collect.time }}</p>
+      <p class="text-gray-600"><strong>Waste Types:</strong> {{ collect.wasteTypes.join(', ') }}</p>
+      <p class="text-gray-600"><strong>Weight:</strong> {{ collect.weight }} kg</p>
+      <p class="text-gray-600"><strong>Status:</strong>
+        <span
+          class="px-2 py-1 rounded-md text-white"
+          [ngClass]="{
+            'bg-yellow-500': collect.status === collectStatus.PENDING,
+            'bg-orange-500': collect.status === collectStatus.IN_PROGRESS,
+            'bg-green-500': collect.status === collectStatus.ACCEPTED,
+            'bg-red-500': collect.status === collectStatus.REJECTED
+          }"
+        >
+          {{ collect.status }}
+        </span>
+      </p>
+      <p class="text-gray-600"><strong>Notes:</strong> {{ collect.notes || 'No notes' }}</p>
+
+      <!-- Buttons only for pending collects -->
+      <div class="mt-4 flex justify-between" *ngIf="canModify(collect)">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded"
+          (click)="editRequest(collect)"
+        >
+          Edit
+        </button>
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded"
+          (click)="deleteRequest(collect.id)"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

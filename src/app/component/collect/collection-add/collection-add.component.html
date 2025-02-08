@@ -1,0 +1,68 @@
+<div class="bgform p-6 rounded-lg shadow-md max-w-2xl mx-auto">
+  <h2 class="text-2xl font-semibold mb-6 text-center">Add Collection Request</h2>
+
+  <!-- Success Message -->
+  <div *ngIf="successPopupVisible" class="bg-green-100 text-green-700 p-3 rounded mb-4">
+    ✅ Collection request submitted successfully!
+    <button (click)="closeSuccessPopup()" class="float-right text-red-500">X</button>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage$ | async as error" class="text-red-600 mb-4">⚠️ {{ error }}</div>
+
+  <form [formGroup]="collectForm" (ngSubmit)="onSubmit()">
+    <!-- Waste Types -->
+    <div class="mb-4">
+      <label class="block text-gray-700">Waste Types</label>
+      <div class="flex flex-wrap gap-4 mt-2">
+        <div *ngFor="let wasteType of wasteTypes" class="flex items-center gap-2">
+          <input type="checkbox" [id]="'wasteType_' + wasteType" [value]="wasteType"
+                 (change)="onWasteTypeChange($event)" [checked]="isChecked(wasteType)" />
+          <label [for]="'wasteType_' + wasteType">{{ wasteType }}</label>
+        </div>
+      </div>
+      <p *ngIf="collectForm.get('wasteTypes')?.invalid && collectForm.get('wasteTypes')?.touched" class="text-red-500 text-sm">At least one waste type is required.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="weight">Weight (g)</label>
+        <input id="weight" formControlName="weight" type="number" class="w-full border p-2 rounded" placeholder="Enter weight" />
+        <p *ngIf="collectForm.get('weight')?.invalid && collectForm.get('weight')?.touched" class="text-red-500 text-sm">Weight must be at least 1000g.</p>
+      </div>
+      <div>
+        <label for="address">Collection Address</label>
+        <input id="address" formControlName="address" type="text" class="w-full border p-2 rounded" placeholder="Enter collection address" />
+        <p *ngIf="collectForm.get('address')?.invalid && collectForm.get('address')?.touched" class="text-red-500 text-sm">Address is required.</p>
+      </div>
+      <div>
+        <label for="collectionDate">Collection Date</label>
+        <input id="collectionDate" formControlName="collectionDate" type="date" class="w-full border p-2 rounded" />
+        <p *ngIf="collectForm.get('collectionDate')?.invalid && collectForm.get('collectionDate')?.touched" class="text-red-500 text-sm">Valid date is required.</p>
+      </div>
+      <div>
+        <label for="time">Preferred Collection Time</label>
+        <input id="time" formControlName="time" type="time" class="w-full border p-2 rounded" />
+        <p *ngIf="collectForm.get('time')?.invalid && collectForm.get('time')?.touched" class="text-red-500 text-sm">Time is required.</p>
+      </div>
+
+
+    <!-- Additional Notes -->
+    <div class="mt-4">
+      <label for="notes">Additional Notes</label>
+      <textarea id="notes" formControlName="notes" class="w-full border p-2 rounded" placeholder="Add any extra details..."></textarea>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="mt-4">
+      <label for="images">Upload Images</label>
+      <input id="images" type="file" (change)="onImageUpload($event)" multiple class="w-full border p-2 rounded" />
+      <div class="flex gap-2 mt-2">
+        <img *ngFor="let img of uploadedImages" [src]="img" class="w-16 h-16 rounded shadow" />
+      </div>
+    </div>
+    </div>
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="collectForm.invalid" class=" bg-blue-300 text-dark p-2 rounded-md  mt-4">Submit</button>
+  </form>
+</div>
