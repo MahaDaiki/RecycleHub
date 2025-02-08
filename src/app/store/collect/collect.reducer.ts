@@ -56,5 +56,24 @@ export const collectReducer = createReducer(
       collects: [...state.collects, newCollect],
       error: null,
     };
-  })
+  }),
+on(CollectActions.updateCollect, (state, { collect }) => {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+    const userId = loggedInUser?.id;
+
+    if (!userId) {
+        return { ...state, error: 'User is not logged in' };
+    }
+
+    let userCollects: CollectModel[] = JSON.parse(localStorage.getItem(userId) || '[]');
+    userCollects = userCollects.map(c => (c.id === collect.id ? { ...c, ...collect } : c));
+    localStorage.setItem(userId, JSON.stringify(userCollects));
+
+    return {
+        ...state,
+        collects: userCollects,
+        error: null,
+    };
+})
 );
+
