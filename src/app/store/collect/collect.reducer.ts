@@ -101,7 +101,7 @@ on(CollectActions.updateCollect, (state, { collect }) => {
             collected.push(updatedCollect);
         }
 
-        // Save both arrays back to localStorage
+
         localStorage.setItem('collects', JSON.stringify(collects));
         localStorage.setItem('collected', JSON.stringify(collected));
 
@@ -110,7 +110,76 @@ on(CollectActions.updateCollect, (state, { collect }) => {
             collects: collects,
             error: null,
         };
-    })
+    }),
+
+    on(CollectActions.acceptedUpdateStatus, (state, { collectId, collectorId }) => {
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+        const userId = loggedInUser?.id;
+
+        if (!userId) {
+            return { ...state, error: 'User is not logged in' };
+        }
+
+        let collects: CollectModel[] = JSON.parse(localStorage.getItem('collects') || '[]');
+        let collected: CollectModel[] = JSON.parse(localStorage.getItem('collected') || '[]');
+
+        collects = collects.map(c =>
+            c.id === collectId
+                ? { ...c, status: CollectStatus.ACCEPTED, collectorId: collectorId }
+                : c
+        );
+
+        collected = collected.map(c =>
+            c.id === collectId
+                ? { ...c, status: CollectStatus.ACCEPTED, collectorId: collectorId }
+                : c
+        );
+
+        localStorage.setItem('collects', JSON.stringify(collects));
+        localStorage.setItem('collected', JSON.stringify(collected));
+
+        return {
+            ...state,
+            collects: collects,
+            error: null,
+        };
+    }),
+
+    on(CollectActions.rejectedUpdateStatus, (state, { collectId, collectorId }) => {
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+        const userId = loggedInUser?.id;
+
+        if (!userId) {
+            return { ...state, error: 'User is not logged in' };
+        }
+
+        let collects: CollectModel[] = JSON.parse(localStorage.getItem('collects') || '[]');
+        let collected: CollectModel[] = JSON.parse(localStorage.getItem('collected') || '[]');
+
+        collects = collects.map(c =>
+            c.id === collectId
+                ? { ...c, status: CollectStatus.REJECTED, collectorId: collectorId }
+                : c
+        );
+
+        collected = collected.map(c =>
+            c.id === collectId
+                ? { ...c, status: CollectStatus.REJECTED, collectorId: collectorId }
+                : c
+        );
+
+        localStorage.setItem('collects', JSON.stringify(collects));
+        localStorage.setItem('collected', JSON.stringify(collected));
+
+        return {
+            ...state,
+            collects: collects,
+            error: null,
+        };
+    }),
+
+
+
 
 );
 

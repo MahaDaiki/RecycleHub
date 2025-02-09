@@ -39,7 +39,13 @@ export class CollectListComponent implements OnInit {
   loadRequests() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
     const userId = loggedInUser?.id;
-    this.collects = JSON.parse(localStorage.getItem(userId) || '[]') || [];
+    if (userId) {
+      const allCollects: CollectModel[] = JSON.parse(localStorage.getItem('collects') || '[]');
+      this.collects = allCollects.filter((collect) => collect.userId === userId);
+    } else {
+      console.warn('No logged-in user found or userId is missing.');
+      this.collects = [];
+    }
   }
 
   canModify(collect: CollectModel): boolean {

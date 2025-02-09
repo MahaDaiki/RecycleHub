@@ -8,6 +8,7 @@ import {LoginComponent} from './login/login.component';
 import {ModifyProfileComponent} from "./modify-profile/modify-profile.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {CollectModule} from '../collect/collect.module';
+import { CollectorProfileComponent } from './collector-profile/collector-profile.component';
 
 
 
@@ -17,6 +18,7 @@ import {CollectModule} from '../collect/collect.module';
     LoginComponent,
     ProfileComponent,
     ModifyProfileComponent,
+    CollectorProfileComponent,
   ],
   imports: [
     CommonModule,
