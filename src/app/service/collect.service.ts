@@ -21,4 +21,24 @@ export class CollectService {
     this.store.dispatch(CollectActions.updateCollect({ collect }));
   }
 
+  getUserAddress(): string {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+    return loggedInUser?.address || '';
+  }
+
+  getPendingCollects(): CollectModel[] {
+    const userAddress = this.getUserAddress();
+    if (!userAddress) return [];
+
+    const allCollects: CollectModel[] = JSON.parse(localStorage.getItem('collects') || '[]');
+
+    return allCollects.filter(
+        (collect) => collect.address === userAddress && collect.status === CollectStatus.PENDING
+    );
+  }
+
+  updateStatusToInProgress(collectId: number, collectorId: number): void {
+    this.store.dispatch(CollectActions.inProgressUpdateStatus({ collectId, collectorId }));
+  }
+
 }

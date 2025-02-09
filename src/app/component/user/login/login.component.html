@@ -12,7 +12,11 @@
 
         <div class="rounded-lg bgform pt-20 pb-20 shadow-lg bg-opacity-0  h-full ">
           <h1 class="text-center text-3xl font-bold mb-6">LOGIN</h1>
+          <div *ngIf="loginErrorMessage" class="text-center error-message">
+            {{ loginErrorMessage }}
+          </div>
           <div class="flex  items-center justify-center">
+
             <!-- Login Form -->
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4 w-full max-w-sm px-0 py-8">
 

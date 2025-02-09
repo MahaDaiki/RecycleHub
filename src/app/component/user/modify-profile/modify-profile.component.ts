@@ -77,35 +77,44 @@ export class ModifyProfileComponent implements OnInit{
       const formValues = this.modifyProfileForm!.value;
 
       if (this.loggedInUser) {
-        // Compare the plain password with the hashed password stored in localStorage
         const isPasswordCorrect = bcrypt.compareSync(formValues.oldPassword, this.loggedInUser.password);
+        if (!isPasswordCorrect) {
+          alert('Old password is incorrect!');
+          return;
+        }
 
-        if (isPasswordCorrect) {
-          if (formValues.newPassword && formValues.newPassword !== formValues.confirmNewPassword) {
+        const updatedUser: UserModel = {
+          id: this.loggedInUser.id,
+          fullName: formValues.fullName,
+          email: formValues.email,
+          address:formValues.address,
+          phoneNumber: formValues.phoneNumber,
+          dateOfBirth: formValues.dateOfBirth,
+          profilePicture: formValues.profilePicture,
+          role: formValues.role,
+          password: this.loggedInUser.password,
+        };
+
+        if (formValues.newPassword?.trim()) {
+          if (formValues.newPassword !== formValues.confirmNewPassword) {
             alert('Passwords do not match');
             return;
           }
-
-          const updatedUser = { ...formValues, id: this.loggedInUser?.id };
-
-          // Hash the new password if it's provided
-          if (formValues.newPassword) {
-            updatedUser.password = bcrypt.hashSync(formValues.newPassword, 10);
-          }
-
-          // Call the update profile service
-          this.userService.updateUserProfile(updatedUser);
-          console.log('Profile updated:', updatedUser);
-          alert('Profile updated successfully!');
-        } else {
-          alert('Old password is incorrect!');
+          updatedUser.password = bcrypt.hashSync(formValues.newPassword, 10);
         }
+
+        this.userService.updateUserProfile(updatedUser);
+        alert('Profile updated successfully!');
+
+        localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
+        this.router.navigate(['/profile']);
       }
     } else {
-      alert('Form is invalid!');
-      console.log('Form is invalid:', this.modifyProfileForm!.value);
+      alert('Form is invalid! Please check your inputs.');
+      console.log('Form errors:', this.modifyProfileForm!.value);
     }
   }
+
 
 
 

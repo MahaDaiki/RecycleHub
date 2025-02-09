@@ -8,12 +8,14 @@ import {CollectService} from '../../service/collect.service';
 import {collectReducer} from '../../store/collect/collect.reducer';
 import {StoreModule} from '@ngrx/store';
 import {CollectListComponent} from './collect-list/collect-list.component';
+import {CityCollectComponent} from './city-collect/city-collect.component';
 
 
 @NgModule({
   declarations: [
     CollectionAddComponent,
     CollectListComponent,
+    CityCollectComponent,
   ],
   imports: [
     CommonModule,

@@ -10,3 +10,8 @@ export const updateCollect = createAction(
     '[Collect] Update Collect',
     props<{ collect: CollectModel }>()
 );
+export const inProgressUpdateStatus = createAction(
+    '[Collect] In Progress Update Status',
+    props<{ collectId: number, collectorId: number }>()
+);
+
