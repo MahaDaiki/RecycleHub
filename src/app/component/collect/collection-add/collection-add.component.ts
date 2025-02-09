@@ -44,7 +44,7 @@ export class CollectionAddComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Method to handle checkbox changes
+
   onWasteTypeChange(event: any) {
     const selectedWasteTypes = this.collectForm.get('wasteTypes')?.value || [];
     if (event.target.checked) {
