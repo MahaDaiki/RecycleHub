@@ -20,12 +20,10 @@ export class CityCollectComponent {
   }
 
   onUpdateStatusToInProgress(collect: CollectModel): void {
-    // Get the logged-in user's collectorId (authenticated user's ID)
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
     const collectorId = loggedInUser?.id;
 
     if (collectorId) {
-      // Update the status of the collect to IN_PROGRESS
       this.collectService.updateStatusToInProgress(collect.id, collectorId);
     }
   }

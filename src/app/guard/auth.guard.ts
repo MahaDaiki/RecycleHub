@@ -9,25 +9,21 @@ import { map, take } from 'rxjs/operators';
 export const authGuard: CanActivateFn = (route, state) => {
   const store = inject(Store);
   const router = inject(Router);
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
 
-  return store.select(selectLoggedInUser).pipe(
-    take(1),
-    map((loggedInUser: UserModel | null) => {
-      if (!loggedInUser) {
-        // router.navigate(['/login']);
+    if (!loggedInUser || !loggedInUser.id) {
+        router.navigate(['/login']);
         return false;
-      }
+    }
 
-      const requiredRole = route.data['role'];
+    const requiredRole = route.data['role'];
 
-
-      if (requiredRole && loggedInUser.role !== requiredRole) {
+    if (requiredRole && loggedInUser.role !== requiredRole) {
         router.navigate(['/unauthorized']);
         return false;
-      }
+    }
 
 
       return true;
-    })
-  );
+
 };

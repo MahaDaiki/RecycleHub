@@ -8,6 +8,8 @@ import {ProfileComponent} from "./profile/profile.component";
 import {authGuard} from '../../guard/auth.guard';
 import {UnauthorizedComponent} from '../unauthorized/unauthorized.component';
 
+import {CollectorProfileComponent} from './collector-profile/collector-profile.component';
+
 
 
 const routes: Routes = [
@@ -15,6 +17,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'modify-profile', component: ModifyProfileComponent },
+  { path: 'collector', component: CollectorProfileComponent, canActivate: [authGuard], data: { role: 'collector' } },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard], data: { role: 'particulier' } },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

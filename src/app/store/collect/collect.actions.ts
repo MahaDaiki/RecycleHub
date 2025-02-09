@@ -14,4 +14,14 @@ export const inProgressUpdateStatus = createAction(
     '[Collect] In Progress Update Status',
     props<{ collectId: number, collectorId: number }>()
 );
+export const acceptedUpdateStatus = createAction(
+    '[Collect] Accepted Update Status',
+    props<{ collectId: number; collectorId: number }>()
+);
+
+export const rejectedUpdateStatus = createAction(
+    '[Collect] Rejected Update Status',
+    props<{ collectId: number; collectorId: number }>()
+);
+
 

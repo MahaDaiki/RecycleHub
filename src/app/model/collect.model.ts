@@ -12,6 +12,7 @@ export class CollectModel {
     public time: string,
     public notes?: string,
     public status: CollectStatus = CollectStatus.PENDING,
-    public images?: string[]
+    public images?: string[],
+    public collectorId?: number
   ) {}
 }
