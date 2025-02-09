@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as CollectActions from './collect.actions';
 import { CollectModel } from '../../model/collect.model';
 import { CollectStatus } from '../../model/enum/collectStatus';
+import {WasteType} from "../../model/enum/wasteType";
 
 export interface State {
   collects: CollectModel[];
@@ -102,7 +103,7 @@ on(CollectActions.updateCollect, (state, { collect }) => {
         }
 
 
-        localStorage.setItem('collects', JSON.stringify(collects));
+        // localStorage.setItem('collects', JSON.stringify(collects));
         localStorage.setItem('collected', JSON.stringify(collected));
 
         return {
@@ -123,11 +124,37 @@ on(CollectActions.updateCollect, (state, { collect }) => {
         let collects: CollectModel[] = JSON.parse(localStorage.getItem('collects') || '[]');
         let collected: CollectModel[] = JSON.parse(localStorage.getItem('collected') || '[]');
 
-        collects = collects.map(c =>
-            c.id === collectId
-                ? { ...c, status: CollectStatus.ACCEPTED, collectorId: collectorId }
-                : c
-        );
+        let totalPoints = JSON.parse(localStorage.getItem('userPoints') || '{}');
+
+        collects = collects.map(c => {
+            if (c.id === collectId) {
+                const userId = c.userId;
+                if (!userId) return c;
+
+                const weightInKg = c.weight / 1000;
+
+                const pointsEarned = c.wasteTypes.reduce((sum, wasteType) => {
+                    switch (wasteType) {
+                        case WasteType.PLASTIC:
+                            return sum + weightInKg * 2;
+                        case WasteType.GLASS:
+                            return sum + weightInKg * 1;
+                        case WasteType.PAPER:
+                            return sum + weightInKg * 1.5;
+                        case WasteType.METAL:
+                            return sum + weightInKg * 3;
+                        default:
+                            return sum;
+                    }
+                }, 0);
+
+                totalPoints[userId] = (totalPoints[userId] || 0) + pointsEarned;
+
+
+                return { ...c, status: CollectStatus.ACCEPTED, collectorId: collectorId };
+            }
+            return c;
+        });
 
         collected = collected.map(c =>
             c.id === collectId
@@ -137,6 +164,7 @@ on(CollectActions.updateCollect, (state, { collect }) => {
 
         localStorage.setItem('collects', JSON.stringify(collects));
         localStorage.setItem('collected', JSON.stringify(collected));
+        localStorage.setItem('userPoints', JSON.stringify(totalPoints));
 
         return {
             ...state,
@@ -179,6 +207,45 @@ on(CollectActions.updateCollect, (state, { collect }) => {
     }),
 
 
+    on(CollectActions.convertPoints, (state, { userId, pointsToExchange }) => {
+        let totalPoints = JSON.parse(localStorage.getItem('userPoints') || '{}');
+
+        if (!totalPoints[userId] || totalPoints[userId] < pointsToExchange) {
+            return { ...state, error: "Insufficient points" };
+        }
+
+
+        const conversionRates = [
+            { points: 500, money: 350 },
+            { points: 200, money: 120 },
+            { points: 100, money: 50 },
+        ];
+
+        let moneyEarned = 0;
+        let remainingPoints = pointsToExchange;
+
+        for (const rate of conversionRates) {
+            while (remainingPoints >= rate.points) {
+                moneyEarned += rate.money;
+                remainingPoints -= rate.points;
+            }
+        }
+
+        if (remainingPoints > 0) {
+            return { ...state, error: "Invalid point amount. Choose 100, 200, or 500." };
+        }
+
+        totalPoints[userId] -= pointsToExchange;
+
+
+        localStorage.setItem('userPoints', JSON.stringify(totalPoints));
+
+        return {
+            ...state,
+            totalPoints,
+            success: `Successfully exchanged ${pointsToExchange} points for ${moneyEarned} Dh!`,
+        };
+    }),
 
 
 );

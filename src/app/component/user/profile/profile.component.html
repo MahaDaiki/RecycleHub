@@ -1,4 +1,12 @@
 <div class="max-w-2xl mx-auto p-6 banner shadow-lg rounded-xl flex flex-col sm:flex-row items-center space-x-6">
+  <div class="fixed top-5 right-5 flex flex-col items-center">
+    <div class="bg-blue-300 text-white text-xl font-bold p-3 rounded-full shadow-lg">
+      {{ getUserPoints() }}
+    </div>
+    <button class="mt-2 text-green-500 text-2xl hover:scale-110 transform transition-transform" (click)="convertPoints()">
+      🔀
+    </button>
+  </div>
 
 <!--Pfp-->
   <div class="relative">

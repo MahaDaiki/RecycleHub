@@ -42,5 +42,16 @@ export class ProfileComponent implements OnInit{
     }
   }
 
+  getUserPoints(): number {
+    if (!this.loggedInUser) return 0;
+    const userPoints = JSON.parse(localStorage.getItem('userPoints') || '{}');
+    return userPoints[this.loggedInUser.id] || 0;
+  }
+
+
+  convertPoints(): void {
+
+    // this.router.navigate(['/convertpoints']);
+  }
 
 }
