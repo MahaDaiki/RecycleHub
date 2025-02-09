@@ -49,7 +49,7 @@ export const collectReducer = createReducer(
 
 
     userCollects.push(newCollect);
-    localStorage.setItem(userId, JSON.stringify(userCollects));
+    localStorage.setItem('collects', JSON.stringify(userCollects));
 
     return {
       ...state,
@@ -74,6 +74,43 @@ on(CollectActions.updateCollect, (state, { collect }) => {
         collects: userCollects,
         error: null,
     };
-})
+}),
+    on(CollectActions.inProgressUpdateStatus, (state, { collectId, collectorId }) => {
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+        const userId = loggedInUser?.id;
+
+
+        if (!userId) {
+            return { ...state, error: 'User is not logged in' };
+        }
+
+
+        let collects: CollectModel[] = JSON.parse(localStorage.getItem('collects') || '[]');
+
+
+        collects = collects.map(c =>
+            c.id === collectId
+                ? { ...c, status: CollectStatus.IN_PROGRESS, collectorId: collectorId }
+                : c
+        );
+
+
+        let collected: CollectModel[] = JSON.parse(localStorage.getItem('collected') || '[]');
+        const updatedCollect = collects.find(c => c.id === collectId);
+        if (updatedCollect) {
+            collected.push(updatedCollect);
+        }
+
+        // Save both arrays back to localStorage
+        localStorage.setItem('collects', JSON.stringify(collects));
+        localStorage.setItem('collected', JSON.stringify(collected));
+
+        return {
+            ...state,
+            collects: collects,
+            error: null,
+        };
+    })
+
 );
 

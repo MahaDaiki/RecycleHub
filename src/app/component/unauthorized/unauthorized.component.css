@@ -1,0 +1,29 @@
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.floatingEmoji {
+  animation: float 4s ease-in-out infinite;
+  font-size: 2rem;
+  margin: 0 10px;
+}
+
+.animation-delay-2 {
+  animation-delay: 1s;
+}
+
+.animation-delay-3 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4 {
+  animation-delay: 3s;
+}

@@ -5,14 +5,17 @@ import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {ModifyProfileComponent} from "./modify-profile/modify-profile.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {authGuard} from '../../guard/auth.guard';
+import {UnauthorizedComponent} from '../unauthorized/unauthorized.component';
 
 
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'modify-profile', component: ModifyProfileComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard], data: { role: 'particulier' } },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
