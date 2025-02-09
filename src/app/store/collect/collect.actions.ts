@@ -23,5 +23,8 @@ export const rejectedUpdateStatus = createAction(
     '[Collect] Rejected Update Status',
     props<{ collectId: number; collectorId: number }>()
 );
-
+export const convertPoints = createAction(
+    '[Collect] Convert Points',
+    props<{ userId: number; pointsToExchange: number }>()
+);
 
