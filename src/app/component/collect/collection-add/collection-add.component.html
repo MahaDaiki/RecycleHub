@@ -8,7 +8,7 @@
   </div>
 
   <!-- Error Message -->
-  <div *ngIf="errorMessage$ | async as error" class="text-red-600 mb-4">⚠️ {{ error }}</div>
+  <div *ngIf="errorMessage$ | async as error" class="text-red-600 mb-4 text-bold">⚠️ {{ error }}</div>
 
   <form [formGroup]="collectForm" (ngSubmit)="onSubmit()">
     <!-- Waste Types -->
@@ -16,6 +16,7 @@
       <label class="block text-gray-700">Waste Types</label>
       <div class="flex flex-wrap gap-4 mt-2">
         <div *ngFor="let wasteType of wasteTypes" class="flex items-center gap-2">
+          <img [src]=" wasteType + '.png'" [alt]="wasteType" class="w-6 h-6" />
           <input type="checkbox" [id]="'wasteType_' + wasteType" [value]="wasteType"
                  (change)="onWasteTypeChange($event)" [checked]="isChecked(wasteType)" />
           <label [for]="'wasteType_' + wasteType">{{ wasteType }}</label>
@@ -26,7 +27,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <label for="weight">Weight (g)</label>
+        <label for="weight">Weight for each waste type (g)</label>
         <input id="weight" formControlName="weight" type="number" class="w-full border p-2 rounded" placeholder="Enter weight" />
         <p *ngIf="collectForm.get('weight')?.invalid && collectForm.get('weight')?.touched" class="text-red-500 text-sm">Weight must be at least 1000g.</p>
       </div>
@@ -46,8 +47,6 @@
         <p *ngIf="collectForm.get('time')?.invalid && collectForm.get('time')?.touched" class="text-red-500 text-sm">Time is required.</p>
       </div>
 
-
-    <!-- Additional Notes -->
     <div class="mt-4">
       <label for="notes">Additional Notes</label>
       <textarea id="notes" formControlName="notes" class="w-full border p-2 rounded" placeholder="Add any extra details..."></textarea>
@@ -62,7 +61,7 @@
       </div>
     </div>
     </div>
-    <!-- Submit Button -->
+
     <button type="submit" [disabled]="collectForm.invalid" class=" bg-blue-300 text-dark p-2 rounded-md  mt-4">Submit</button>
   </form>
 </div>

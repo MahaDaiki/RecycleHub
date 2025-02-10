@@ -4,11 +4,11 @@
   <div class="grid  sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4">
     <div
       *ngFor="let collect of collects"
-      class="bg-white rounded-xl shadow-lg p-4 border border-gray-200"
+      class="bg-gray-200 rounded-xl shadow-lg p-4 border border-gray-200"
     >
       <h3 class="text-lg font-semibold text-gray-800">Collect #{{ collect.id }}</h3>
       <p class="text-gray-600"><strong>Address:</strong> {{ collect.address }}</p>
-      <p class="text-gray-600"><strong>Date:</strong> {{ collect.collectionDate }}</p>
+      <p class="text-gray-600"><strong>Date:</strong> {{ collect.collectionDate  | dateFormat: 'MMMM d, y'  }}</p>
       <p class="text-gray-600"><strong>Time:</strong> {{ collect.time }}</p>
       <p class="text-gray-600"><strong>Waste Types:</strong> {{ collect.wasteTypes.join(', ') }}</p>
       <p class="text-gray-600"><strong>Weight:</strong> {{ collect.weight }} g</p>

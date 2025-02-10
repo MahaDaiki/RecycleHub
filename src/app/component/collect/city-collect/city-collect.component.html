@@ -1,19 +1,45 @@
-<div class="p-6 max-w-4xl mx-auto">
-  <h2 class="text-2xl font-bold mb-4">Pending Collects in Your City</h2>
+<div class="p-6 max-w-5xl mx-auto">
+  <h2 class="text-2xl font-bold mb-6 text-center flex items-center justify-center space-x-2">
+    <img src="1.png" alt="left icon" class="w-10 h-10" />
+    <span>Pending Collects in Your City</span>
+    <img src="1.png" alt="right icon" class="w-10 h-10" />
+  </h2>
 
-  <div *ngIf="pendingCollects.length === 0" class="text-gray-500">No pending collects available.</div>
 
-  <div *ngFor="let collect of pendingCollects" class="bg-white shadow-lg rounded-lg p-4 mb-4 border">
-    <h3 class="text-lg font-semibold text-blue-600">{{ collect.wasteTypes.join(', ') }}</h3>
-    <p class="text-gray-600">Weight: {{ collect.weight }} kg</p>
-    <p class="text-gray-600">Address: {{ collect.address }}</p>
-    <p class="text-gray-500">Status: {{ collect.status }}</p>
-    <button
-      *ngIf="collect.status === collectStatus.PENDING"
-      (click)="onUpdateStatusToInProgress(collect)"
-      class="bg-blue-500 text-white p-2 rounded mt-2"
-    >
-      Start Collection
-    </button>
+  <div *ngIf="pendingCollects.length === 0" class="text-gray-500 text-center flex items-center justify-center space-x-2">
+    <img src="3.png" alt="left icon" class="w-10 h-10" />
+    <span>No pending collects available.</span>
+    <img src="3.png" alt="right icon" class="w-10 h-10" />
+  </div>
+
+  <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div *ngFor="let collect of pendingCollects" class="bg-gray-200 shadow-2xl rounded-lg overflow-hidden border">
+
+      <img [src]=" 'test.jpg'" class="w-full h-36 object-cover" [alt]="collect.wasteTypes.join(', ')">
+
+
+      <div class="p-4">
+        <h3 class="text-lg font-semibold text-blue-600 flex items-center gap-2 mb-2">
+          <ng-container *ngFor="let wasteType of collect.wasteTypes">
+            <img [src]="wasteType + '.png'" [alt]="wasteType" class="w-6 h-6" />
+          </ng-container>
+          {{ collect.wasteTypes.join(', ') }}
+        </h3>
+
+        <p class="text-gray-600"><strong>Weight:</strong> {{ collect.weight }} g</p>
+        <p class="text-gray-600"><strong>Date:</strong> {{ collect.collectionDate | dateFormat: 'MMMM d, y' }}</p>
+        <p class="text-gray-600"><strong>Address:</strong> {{ collect.address }}</p>
+        <p class="text-gray-500"><strong>Status:</strong> {{ collect.status }}</p>
+
+        <!-- Button -->
+        <button
+          *ngIf="collect.status === collectStatus.PENDING"
+          (click)="onUpdateStatusToInProgress(collect)"
+          class="bg-blue-500 text-white px-4 py-2 rounded mt-3 w-full hover:bg-blue-700 transition"
+        >
+          Start Collection
+        </button>
+      </div>
+    </div>
   </div>
 </div>

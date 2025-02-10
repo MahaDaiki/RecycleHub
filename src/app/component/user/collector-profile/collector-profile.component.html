@@ -20,6 +20,7 @@
     </p>
 
     <div class="mt-3 space-y-2">
+
       <p class="text-gray-700">
         <strong>Phone:</strong> {{ loggedInUser?.phoneNumber }}
       </p>
@@ -52,36 +53,55 @@
   <h2 class="text-2xl font-bold text-center mb-6">My Collected Items</h2>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let collect of collectedItems" class="max-w-sm bg-white shadow-lg rounded-lg p-4">
+    <div *ngFor="let collect of collectedItems" class="max-w-sm bg-white shadow-lg rounded-lg p-4 transform hover:scale-105 transition duration-300 ease-in-out">
+
+      <!-- Collection Info -->
       <div class="flex flex-col justify-between">
         <h3 class="text-lg font-semibold text-gray-700 mb-2">Collection #{{ collect.id }}</h3>
-        <p class="text-sm text-gray-500">Status: <span [ngClass]="{'text-blue-500': collect.status === 'pending', 'text-green-500': collect.status === 'accepted', 'text-red-500': collect.status === 'rejected'}">{{ collect.status | titlecase }}</span></p>
+
+        <!-- Waste Types & Icons -->
+        <h3 class="text-lg font-semibold text-blue-600 flex items-center gap-2">
+          <ng-container *ngFor="let wasteType of collect.wasteTypes">
+            <img [src]="wasteType + '.png'" [alt]="wasteType" class="w-6 h-6 rounded-full shadow-sm" />
+          </ng-container>
+          {{ collect.wasteTypes.join(', ') }}
+        </h3>
+
+        <!-- Collection Details -->
+        <p class="text-sm text-gray-500">Status:
+          <span [ngClass]="{
+            'text-blue-500': collect.status === 'pending',
+            'text-green-500': collect.status === 'accepted',
+            'text-red-500': collect.status === 'rejected'
+          }">
+            {{ collect.status | titlecase }}
+          </span>
+        </p>
         <p class="text-sm text-gray-500">Weight: {{ collect.weight }} g</p>
         <p class="text-sm text-gray-500">Address: {{ collect.address }}</p>
         <p class="text-sm text-gray-500">Date: {{ collect.collectionDate | date }}</p>
 
+        <!-- Action Buttons -->
         <div class="flex justify-between mt-4">
-          <div class="flex justify-between mt-4">
+          <div class="flex gap-2">
+            <!-- Accept Button -->
             <button
               [disabled]="isStatusDisabled(collect, CollectStatus.ACCEPTED)"
               *ngIf="collect.status !== CollectStatus.REJECTED"
               (click)="onUpdateStatusToAccepted(collect)"
-              class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300 ease-in-out">
+              class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300 ease-in-out w-full">
               ✔ Accept
             </button>
 
+            <!-- Decline Button -->
             <button
               [disabled]="isStatusDisabled(collect, CollectStatus.REJECTED)"
               *ngIf="collect.status !== CollectStatus.ACCEPTED"
               (click)="onUpdateStatusToRejected(collect)"
-              class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out">
+              class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out w-full">
               ❌ Decline
             </button>
-
-
           </div>
-
-
         </div>
       </div>
     </div>

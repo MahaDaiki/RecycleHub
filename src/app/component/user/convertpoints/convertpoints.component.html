@@ -1,0 +1,81 @@
+<div class=" container mx-auto my-10 px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+  <!-- Conversion Form -->
+  <div class="bgcard shadow-2xl rounded-xl p-6">
+    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-4">Convert Points</h2>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="bg-green-100 text-green-700 p-3 rounded-md mb-4 shadow-md">
+      {{ successMessage }}
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="bg-red-100 text-red-700 p-3 rounded-md mb-4 shadow-md">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="errorMessage$ | async as error" class="text-red-600 font-bold mb-4">⚠️ {{ error }}</div>
+
+    <!-- Conversion Info -->
+    <div class="bg-gray-200 text-gray-700 p-4 rounded-md mb-4 text-sm shadow">
+      <p class="font-semibold">💸💰You can convert points into vouchers:💸💰</p>
+      <ul class="list-disc pl-5">
+        <li>100 points = 50 Dh</li>
+        <li>200 points = 120 Dh</li>
+        <li>500 points = 350 Dh</li>
+      </ul>
+    </div>
+
+    <!-- Conversion Form -->
+    <form [formGroup]="pointsForm" (ngSubmit)="convertPoints()">
+      <div class="mb-4">
+        <label for="points" class="block text-gray-700 text-sm font-bold mb-2">Points to Convert</label>
+        <input
+          id="points"
+          type="number"
+          formControlName="points"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+          [ngClass]="{'border-red-500': points?.touched && points?.invalid}"
+          placeholder="Enter 100, 200, or 500 points"
+        />
+        <div *ngIf="points?.touched && points?.invalid" class="text-red-500 text-xs mt-2">
+          <div *ngIf="points?.errors">You must convert at least 100 points.</div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <p class="text-sm text-white">♻️ Remaining points: <span class="font-semibold">{{ remainingPoints }}♻️</span></p>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="pointsForm.invalid"
+        class="w-full bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow-md disabled:bg-gray-400"
+      >
+        Convert Points
+      </button>
+    </form>
+  </div>
+
+
+  <div class="relative">
+    <h2 class="text-xl font-semibold mb-4 text-center text-gray-900">Conversion History</h2>
+    <div class="bgcard backdrop-blur-lg shadow-2xl rounded-lg overflow-hidden p-4">
+      <table class="w-full border-collapse border border-gray-300 shadow-lg">
+        <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 px-4 py-2">Points Converted🔀</th>
+          <th class="border border-gray-300 px-4 py-2">Vouchers Received💸💰</th>
+          <th class="border border-gray-300 px-4 py-2">Date📅</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let entry of history" class="text-center bg-white hover:bg-gray-100 transition">
+          <td class="border border-gray-300 px-4 py-2">{{ entry.pointsConverted }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ entry.moneyReceived }} Dh</td>
+          <td class="border border-gray-300 px-4 py-2">{{ entry.timestamp | date:'short' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

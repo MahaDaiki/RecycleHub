@@ -3,6 +3,7 @@ import {CollectModel} from '../../../model/collect.model';
 import {CollectStatus} from '../../../model/enum/collectStatus';
 import {CollectService} from "../../../service/collect.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-collect-list',
@@ -17,7 +18,7 @@ export class CollectListComponent implements OnInit {
   selectedCollect: CollectModel | null = null;
   showPopup = false;
   collectForm!: FormGroup;
-  constructor(private collectService: CollectService, private fb: FormBuilder) {}
+  constructor(private datePipe: DatePipe,private collectService: CollectService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.loadRequests();

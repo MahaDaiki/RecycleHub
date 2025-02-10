@@ -1,0 +1,50 @@
+<nav class="bg-gray-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+
+      <div class="flex items-center">
+        <a href="/" class="text-xl font-bold">♻️RecycleHub♻️</a>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-4">
+        <a *ngIf="userRole === 'collector'" routerLink="/collector" class="hover:text-gray-300">My Profile</a>
+        <a *ngIf="userRole === 'particulier'" routerLink="/profile" class="hover:text-gray-300">My Profile</a>
+
+
+        <a *ngIf="userRole === 'collector'" routerLink="/collects" class="hover:text-gray-300">Collects</a>
+
+
+
+
+        <button *ngIf="loggedInUser"
+                (click)="logout()"
+                class="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600">
+          Logout
+        </button>
+      </div>
+
+
+      <button class="md:hidden focus:outline-none" (click)="toggleMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor"
+             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+
+  <div *ngIf="isMenuOpen" class="md:hidden bg-gray-700 p-4 space-y-2">
+    <a routerLink="/" class="block hover:text-gray-300">Home</a>
+    <a routerLink="/about" class="block hover:text-gray-300">About</a>
+
+
+    <button *ngIf="loggedInUser"
+            (click)="logout()"
+            class="w-full bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600">
+      Logout
+    </button>
+  </div>
+</nav>
+
