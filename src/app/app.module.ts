@@ -8,14 +8,15 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {userReducer} from './store/user/user.reducer';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { collectReducer } from './store/collect/collect.reducer';
-import {UnauthorizedComponent} from './component/unauthorized/unauthorized.component';
+import {UnauthorizedComponent} from './component/shared/unauthorized/unauthorized.component';
+import { NavbarComponent } from './component/shared/navbar/navbar.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     UnauthorizedComponent,
-
+    NavbarComponent,
 
 
   ],

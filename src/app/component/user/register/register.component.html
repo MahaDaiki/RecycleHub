@@ -30,7 +30,6 @@
           <p class="text-sm text-gray-600 mt-2">Upload Profile Picture</p>
         </div>
 
-        <!-- Form -->
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
@@ -45,7 +44,6 @@
               </small>
             </div>
 
-
             <div>
               <input
                 formControlName="email"
@@ -58,7 +56,7 @@
               </small>
             </div>
         </div>
-            <!-- Mot de passe & Confirmation -->
+
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <input
@@ -122,10 +120,10 @@
               </small>
             </div>
 
-            <!-- Hidden role input -->
+
             <input type="hidden" formControlName="role" />
 
-            <!-- Submit Button -->
+
             <div class="mt-4">
               <button
                 type="submit"
@@ -134,6 +132,8 @@
               >
                 Register
               </button>
+              <p>♻️Already have an account? <a routerLink="/login" class="text-blue-500 hover:underline">Login ♻️</a></p>
+
             </div>
 
           </form>

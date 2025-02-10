@@ -25,32 +25,43 @@ export const collectReducer = createReducer(
     }
 
 
-    let userCollects = JSON.parse(localStorage.getItem(userId) || '[]');
+    let allCollects: CollectModel[] = JSON.parse(localStorage.getItem('collects') || '[]');
 
 
-    const newCollectId = userCollects.length ? userCollects[userCollects.length - 1].id + 1 : 1;
+    const newCollectId = allCollects.length ? allCollects[allCollects.length - 1].id + 1 : 1;
+
     const newCollect: CollectModel = {
       ...collect,
       id: newCollectId,
       userId: userId,
     };
 
-    if (collect.status === CollectStatus.PENDING) {
-      const pendingCollects = userCollects.filter((c: CollectModel) => c.status === CollectStatus.PENDING);
+    const collectionDate = new Date(collect.collectionDate);
+    const currentDate = new Date();
 
-      if (pendingCollects.length >= 3) {
+    if (collectionDate < currentDate) {
+      return { ...state, error: 'Collection date cannot be in the past.' };
+    }
+
+    if (collect.status === CollectStatus.PENDING) {
+
+
+      const pendingCollectsForUser = allCollects.filter(
+        (c: CollectModel) => c.userId === userId && c.status === CollectStatus.PENDING
+      );
+
+      if (pendingCollectsForUser.length >= 3) {
         return { ...state, error: 'You can only have 3 pending collections at a time.' };
       }
-
-      const totalWeight = pendingCollects.reduce((sum: number, c: CollectModel) => sum + c.weight, 0);
+      const totalWeight = pendingCollectsForUser.reduce((sum: number, c: CollectModel) => sum + c.weight, 0);
       if (totalWeight + collect.weight > 10000) {
         return { ...state, error: 'Total weight of pending collections exceeds 10kg.' };
       }
     }
 
 
-    userCollects.push(newCollect);
-    localStorage.setItem('collects', JSON.stringify(userCollects));
+    allCollects.push(newCollect);
+    localStorage.setItem('collects', JSON.stringify(allCollects));
 
     return {
       ...state,
@@ -239,6 +250,16 @@ on(CollectActions.updateCollect, (state, { collect }) => {
 
 
         localStorage.setItem('userPoints', JSON.stringify(totalPoints));
+      let history = JSON.parse(localStorage.getItem('history') || '[]');
+
+      history.push({
+        userId,
+        pointsConverted: pointsToExchange,
+        moneyReceived: moneyEarned,
+        timestamp: new Date().toISOString()
+      });
+
+      localStorage.setItem('history', JSON.stringify(history));
 
         return {
             ...state,

@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit{
 
   convertPoints(): void {
 
-    // this.router.navigate(['/convertpoints']);
+    this.router.navigate(['/convertpoints']);
   }
 
 }

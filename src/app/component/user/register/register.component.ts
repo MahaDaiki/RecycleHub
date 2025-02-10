@@ -54,7 +54,7 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
 
-      // Check existing users in localStorage
+
       const users = JSON.parse(localStorage.getItem('users') || '[]');
 
       let lastUserId = localStorage.getItem('lastUserId');

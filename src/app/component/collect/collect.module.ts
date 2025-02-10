@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 
 import { CollectRoutingModule } from './collect-routing.module';
 import {CollectionAddComponent} from './collection-add/collection-add.component';
@@ -9,6 +9,7 @@ import {collectReducer} from '../../store/collect/collect.reducer';
 import {StoreModule} from '@ngrx/store';
 import {CollectListComponent} from './collect-list/collect-list.component';
 import {CityCollectComponent} from './city-collect/city-collect.component';
+import {DateFormatPipe} from '../../pipe/date-format.pipe';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {CityCollectComponent} from './city-collect/city-collect.component';
     CollectionAddComponent,
     CollectListComponent,
     CityCollectComponent,
+    DateFormatPipe
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,7 @@ import {CityCollectComponent} from './city-collect/city-collect.component';
     ReactiveFormsModule,
     StoreModule.forFeature('collect', collectReducer)
   ],
-  providers: [CollectService],
+  providers: [CollectService,DatePipe ],
   exports: [CollectionAddComponent,CollectListComponent ]
 })
 export class CollectModule { }

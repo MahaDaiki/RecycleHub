@@ -23,6 +23,7 @@ export class CollectionAddComponent implements OnInit {
   successPopupVisible = false;
   uploadedImages: string[] = [];
 
+
   constructor(
     private fb: FormBuilder,
     private store: Store,
@@ -63,6 +64,7 @@ export class CollectionAddComponent implements OnInit {
     return wasteTypes.includes(wasteType);
   }
 
+
   onSubmit() {
     if (this.collectForm.valid) {
       const formValue = this.collectForm.value;
@@ -90,8 +92,11 @@ export class CollectionAddComponent implements OnInit {
       this.successPopupVisible = true;
 
       this.collectForm.reset();
+      this.uploadedImages = [];
     } else {
-      alert('Please fill in all required fields with valid data.');
+
+      this.successPopupVisible = false;
+
     }
   }
 

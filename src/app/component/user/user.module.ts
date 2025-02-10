@@ -9,6 +9,7 @@ import {ModifyProfileComponent} from "./modify-profile/modify-profile.component"
 import {ProfileComponent} from "./profile/profile.component";
 import {CollectModule} from '../collect/collect.module';
 import { CollectorProfileComponent } from './collector-profile/collector-profile.component';
+import {ConvertpointsComponent} from './convertpoints/convertpoints.component';
 
 
 
@@ -19,6 +20,7 @@ import { CollectorProfileComponent } from './collector-profile/collector-profile
     ProfileComponent,
     ModifyProfileComponent,
     CollectorProfileComponent,
+    ConvertpointsComponent,
   ],
   imports: [
     CommonModule,
